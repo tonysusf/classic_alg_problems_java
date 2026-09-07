@@ -6,7 +6,7 @@ import java.util.*;
 
 class CoinChange {
     public int coinChange(int[] coins, int amount) {
-        System.out.println("Input is: " + Arrays.toString(coins) + ", amount is: " + amount);
+        System.out.println("input is: " + Arrays.toString(coins) + ", amount is: " + amount);
         int[] dp = new int[amount+1];
         Arrays.fill(dp, amount+1);
         dp[0] = 0;
@@ -21,8 +21,34 @@ class CoinChange {
         return out;
     }
 
-    public static void main(String[] args){
-        assert new CoinChange().coinChange(new int[]{4, 1, 2}, 9) == 3;
+    public static void main(String[] args) {
+        CoinChange s = new CoinChange();
+
+        assert s.coinChange(new int[]{1, 2, 5}, 11) == 3;
+
+        // exact coin amount
+        assert s.coinChange(new int[]{2, 5, 10}, 10) == 1;
+
+        // no result
+        assert s.coinChange(new int[]{2}, 3) == -1;
+
+        // amount = zero
+        assert s.coinChange(new int[]{1, 2, 5}, 0) == 0;
+
+        // one coin
+        assert s.coinChange(new int[]{3}, 9) == 3;
+
+        // coin > amount
+        assert s.coinChange(new int[]{5, 10}, 3) == -1;
+
+        // combination vs repeat
+        assert s.coinChange(new int[]{1, 3, 4}, 6) == 2; // 3 + 3
+
+        // unsorted coins
+        assert s.coinChange(new int[]{5, 2, 1}, 7) == 2; // 5 + 2
+
+        // dup coins
+        assert s.coinChange(new int[]{1, 2, 2, 5}, 11) == 3;
     }
 }
 
