@@ -5,7 +5,7 @@ import java.util.*;
 */
 
 class CourseSchedule {
-    private boolean hasCycle(int current, Map<Integer, List<Integer>> edges, boolean[] visited, boolean[] inPath) {
+    private boolean hasCycle(int current, List<List<Integer>> edges, boolean[] visited, boolean[] inPath) {
         if (inPath[current]) {
             return true;
         }
@@ -14,11 +14,9 @@ class CourseSchedule {
         }
         inPath[current] = true;
         visited[current] = true;
-        if(edges.containsKey(current)) {
-            for(int otherNode: edges.get(current)) {
-                if(hasCycle(otherNode, edges, visited, inPath)){
-                    return true;
-                }
+        for(int otherNode: edges.get(current)) {
+            if(hasCycle(otherNode, edges, visited, inPath)){
+                return true;
             }
         }
         inPath[current] = false;
@@ -27,13 +25,14 @@ class CourseSchedule {
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         System.out.println("Input - numCourses= " + numCourses + ", prerequisites=" + Arrays.deepToString(prerequisites));
-        Map<Integer, List<Integer>> edges = new HashMap<>();
+        List<List<Integer>> edges = new ArrayList<>();
         boolean out = true;
+        for(int i=0; i<numCourses; i++){
+            edges.add(new ArrayList<Integer>());
+        }
+
         for(int[] p: prerequisites) {
             System.out.println("p is: " + Arrays.toString(p));
-            if(!edges.containsKey(p[0])){
-                edges.put(p[0], new ArrayList<>());
-            }
             edges.get(p[0]).add(p[1]);
         }
         boolean[] visited = new boolean[numCourses];
@@ -41,6 +40,7 @@ class CourseSchedule {
         for(int current=0; current<numCourses; current++){
             if(hasCycle(current, edges, visited, inPath)) {
                 out = false;
+                break;
             }
         }
         System.out.println("Output is " + out);
