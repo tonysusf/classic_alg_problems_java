@@ -37,8 +37,15 @@ class JavaBasics {
         Map<Integer, Integer> lookup = new HashMap();
         lookup.put(1, 100);
         lookup.put(2, 200);
-        System.out.println(lookup);
+        System.out.println("Map is " + lookup);
         System.out.println(lookup.get(2));
+
+        //Set
+        Set<Integer> set = new HashSet<>();
+        set.add(4);
+        set.add(4);
+        set.add(9);
+        System.out.println("Set is " + set);
     }
 }
 
