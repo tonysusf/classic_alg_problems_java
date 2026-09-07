@@ -32,7 +32,7 @@ class CourseSchedule {
         for(int[] p: prerequisites) {
             System.out.println("p is: " + Arrays.toString(p));
             if(!edges.containsKey(p[0])){
-                edges.put(p[0], new ArrayList());
+                edges.put(p[0], new ArrayList<>());
             }
             edges.get(p[0]).add(p[1]);
         }
@@ -50,9 +50,70 @@ class CourseSchedule {
     public static void main(String[] args) {
         CourseSchedule s = new CourseSchedule();
 
-        int[][] prerequisites = {
-            {1, 0}
-        };
-        assert s.canFinish(2, prerequisites) == true;
+        // simple case
+        assert s.canFinish(2, new int[][] {
+                {1, 0}
+            }
+        ) == true;
+
+        // cycle
+        assert s.canFinish(2, new int[][] {
+                {1, 0},
+                {0, 1}
+            }
+        ) == false;
+
+        // no prerequisites
+        assert s.canFinish(3,new int[][] {}
+        ) == true;
+
+        // Simple chain: 0 -> 1 -> 2 -> 3
+        assert s.canFinish(4, new int[][] {
+                {1, 0},
+                {2, 1},
+                {3, 2}
+            }
+        ) == true;
+
+        // longer cycle: 0 -> 1 -> 2 -> 0
+        assert s.canFinish(3, new int[][] {
+                {1, 0},
+                {2, 1},
+                {0, 2}
+            }
+        ) == false;
+
+        // multiple prerequisites, but no cycle
+        assert s.canFinish(4, new int[][] {
+                {1, 0},
+                {2, 0},
+                {3, 1},
+                {3, 2}
+            }
+        ) == true;
+
+        // disconnected graph with one cycle
+        assert s.canFinish(5, new int[][] {
+                {1, 0},
+                {3, 2},
+                {2, 3}
+            }
+        ) == false;
+
+        // one course
+        assert s.canFinish(1, new int[][] {}
+        ) == true;
+
+        // longer valid DAG
+        assert s.canFinish(6, new int[][] {
+                {1, 0},
+                {2, 0},
+                {3, 1},
+                {3, 2},
+                {4, 3},
+                {5, 4}
+            }
+        ) == true;
+
     }
 }
