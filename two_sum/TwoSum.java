@@ -9,18 +9,14 @@ class TwoSum {
     public int[] twoSum(int[] nums, int target) {
         System.out.println("Input is: " + Arrays.toString(nums) + ", target is: " + target);
         Map<Integer, Integer> lookup = new HashMap<>();
-        int[] result = {};
 
-        for (int i = 0; i < nums.length; i++) {
+        for (int i=0; i<nums.length; i++) {
             if (lookup.containsKey(target - nums[i])) {
-                result = new int[] {lookup.get(target - nums[i]), i};
-                break;
+                return new int[]{lookup.get(target - nums[i]), i};
             }
             lookup.put(nums[i], i);
         }
-
-        System.out.println("result is " + Arrays.toString(result));
-        return result;
+        return new int[]{};
     }
 
 
@@ -55,6 +51,8 @@ class TwoSum {
             new TwoSum().twoSum(new int[]{0, 4, 3, 0}, 0),
             new int[]{0, 3}
         );
+
+        System.out.println("All passed.");
     }
 }
 
